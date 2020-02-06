@@ -31,46 +31,25 @@ import java.util.*
 class PsiProtoClassCommentReference(element: PsiCommentImpl) :
     PsiReferenceBase<PsiCommentImpl>(element) {
     override fun resolve(): PsiElement? {
-        val path = Regex("""^//\ssource:\s(?<path>[\w\/]+.proto)$""").matchEntire(element.text)?.groups?.get("path")?.toString()
+        val path =
+            Regex("""^//\ssource:\s(?<path>[\w\/]+.proto)$""").matchEntire(element.text)?.groups?.get("path")?.value
 
         if (path === null) {
             return null
         }
 
         val project = element.project
-
         val pathComponents = path.split("/")
 
-//        LocalFileSystem.getInstance().findFileByPath(path)
-        //TODO use path from comment
-        val files = FilenameIndex.getFilesByName(project, pathComponents.last(), GlobalSearchScope.allScope(project))
+        val fileName = pathComponents.last()
 
-        val filteredFiles = files.filter {
-            val file = it
-            return file
+        val filesMatchingJustTheName = FilenameIndex.getFilesByName(project, fileName, GlobalSearchScope.allScope(project))
+
+        val filesMatchingThePath = filesMatchingJustTheName.filter { file ->
+            file.virtualFile?.canonicalPath?.contains(path) ?: false
         }
-//        val files = findFileByRelativePath(project, path)
 
-        //TODO improve
-        return files[0]
-    }
-
-    fun findFileByRelativePath(project: Project, fileRelativePath: String): List<VirtualFile> {
-        val relativePath =
-            if (fileRelativePath.startsWith("/")) fileRelativePath else "/$fileRelativePath"
-        val fileTypes: Set<FileType> =
-            setOf(FileTypeManager.getInstance().getFileTypeByFileName(relativePath))
-        val fileList: MutableList<VirtualFile> = ArrayList()
-        FileBasedIndex.getInstance()
-            .processFilesContainingAllKeys(FileTypeIndex.NAME, fileTypes, GlobalSearchScope.projectScope(project), null,
-                Processor { virtualFile: VirtualFile ->
-                    if (virtualFile.path.endsWith(relativePath)) {
-                        fileList.add(virtualFile)
-                    }
-                    true
-                }
-            )
-        return fileList
+        return filesMatchingThePath.firstOrNull()
     }
 }
 
