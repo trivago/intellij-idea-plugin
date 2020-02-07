@@ -9,6 +9,10 @@
     </description>
     <vendor>trivago</vendor>
 
+    <version>0.1.0</version>
+
+    <idea-version since-build="193.0" until-build="193.*" />
+
     <extensions defaultExtensionNs="com.intellij">
 
         <psi.referenceContributor implementation="com.trivago.jetbrains.plugin.PsiProtoClassCommentReferenceContributor"/>
