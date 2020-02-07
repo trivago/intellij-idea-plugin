@@ -23,7 +23,7 @@ This will start a new session of IDE with loaded the local plugin.
 1. Clone the project and import it in IntelliJ Idea
 2. Run select `intellij -> runIde` from the IDE's gradle window or run `gradle runIde`.   
 
-#### Release
+### Release
 
 1. Increase the version in `src/main/resources/META-INF/plugin.xml` and `build.gradle.kts`
 2. Commit and push
