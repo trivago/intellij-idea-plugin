@@ -9,7 +9,11 @@
       url - path to download the plugin JAR/ZIP file. Required. Must be HTTPS
       version - version of this plugin. Required. Must match <version> in plugin.xml
     -->
-    <plugin id="trivago.intellij" version="0.1.0" url="https://www.otherserver.com/other_repository/differentplugin.jar">
+    <plugin
+            id="trivago.intellij"
+            version="0.1.0"
+            url="https://github.com/trivago/intellij-idea-plugin/releases/download/0.1.0/intellij-idea-plugin-0.1.0.jar"
+    >
         <!--
           The <idea-version> element must match the same element in plugin.xml. Required.
         -->
