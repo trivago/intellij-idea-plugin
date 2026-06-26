@@ -1,5 +1,10 @@
 # IntelliJ Idea Plugin by trivago
 
+
+> [!CAUTION]
+> This repository has been archived as of June 2026.  
+> If you wish to update or extend this project, please create a fork.
+
 Internal plugin, quick and dirty implementation.
 
 Features:
